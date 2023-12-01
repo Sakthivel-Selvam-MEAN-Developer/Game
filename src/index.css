@@ -1,0 +1,48 @@
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+}
+.gamepage,
+.getnames{
+  height: 100vh;
+}
+.getnames{
+  background-color: #5486e9;
+}
+.getnames input{
+  max-width: 500px;
+  min-width: 300px;
+}
+.getnames form{
+  padding: 20px;
+  background-color: #00ff3e5e;
+  border-radius: 10px;
+  color: white;
+}
+.gamepage{
+  background-color: white;
+}
+.player{
+  padding: 20px;
+  background-color: wheat;
+  margin: 5px;
+}
+.results{
+  margin-bottom: 20px;
+}
+.getnames label{
+  font-weight: 600;
+  color: black;
+}
+.results{
+  height: 90vh;
+}
+@media (max-width:420px) {
+  .getnames form{
+    padding: 20px 0;
+  }
+  .getnames input{
+    min-width: 200px !important;
+  }
+}
