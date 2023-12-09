@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { query, collection, getDocs } from 'firebase/firestore'
-import { database } from '../firebase/server';
+import api from '../api/game.api'
 
 const ResultsPage = ({ navigate }) => {
   const [allResults, setAllResults] = useState([])
@@ -10,14 +9,12 @@ const ResultsPage = ({ navigate }) => {
   }, [])
 
   const getAllResults = async () => {
-    const que = query(collection(database, 'Game_Results'))
-    const querySnapShot = await getDocs(que)
-    let results = []
-    querySnapShot.forEach(data => {
-      results.push({ ...data.data(), id: data.id })
-    })
-    setAllResults(results)
-    console.log(allResults)
+    try {
+      const response = await api.get('/api/get/game_results')
+      setAllResults(response.data)
+    } catch (err) {
+      console.error('Error : ', err)
+    }
   }
   return (
     <div className='results container overflow-x-scroll d-flex flex-column justify-content-center'>
@@ -40,7 +37,7 @@ const ResultsPage = ({ navigate }) => {
           </tr>
           {allResults.length ?
             (allResults.map(data => (
-              <tr>
+              <tr key={data.game_id}>
                 <td>{data.player1_name}</td>
                 <td>{data.player1_wins}</td>
                 <td>{data.player2_name}</td>

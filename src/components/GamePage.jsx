@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { PlayerGame } from './PlayerGame';
-import { addDoc, collection } from 'firebase/firestore';
-import { database } from '../firebase/server';
+import api from '../api/game.api';
 
 const GamePage = ({ player1Name, player2Name, updateResult, rounds, navigate, setRounds }) => {
     const [player1SelectedOption, setPlayer1SelectedOption] = useState('');
@@ -24,15 +23,18 @@ const GamePage = ({ player1Name, player2Name, updateResult, rounds, navigate, se
     }, [rounds])
 
     const handleAPI = async () => {
-        const finalWinner = player1TotalWins == player2TotalWins ? 'It\'s Tie' : (player1TotalWins > player2TotalWins ? player1Name + ' Wins!' : player2Name + ' Wins!')
-        const gameResult = {
-            player1_name: player1Name,
-            player2_name: player2Name,
-            player1_wins: player1TotalWins,
-            player2_wins: player2TotalWins,
-            overall: finalWinner
+        try {
+            const finalWinner = player1TotalWins == player2TotalWins ? 'It\'s Tie' : (player1TotalWins > player2TotalWins ? player1Name + ' Wins!' : player2Name + ' Wins!')
+            const response = await api.post('/api/post/game_results', {
+                player1Name: player1Name,
+                player2Name: player2Name,
+                player1TotalWins: player1TotalWins,
+                player2TotalWins: player2TotalWins,
+                overall: finalWinner
+            })
+        } catch (err) {
+            console.Error('Error : ', err)
         }
-        await addDoc(collection(database, 'Game_Results'), gameResult)
     }
 
     const handleReloadPage = (event) => {
