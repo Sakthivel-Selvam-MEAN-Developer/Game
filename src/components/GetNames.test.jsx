@@ -29,9 +29,9 @@ describe('GetNames Component', () => {
     fireEvent.change(screen.getByLabelText(/Player 1 Name/), { target: { value: 'Player1' } }) 
     fireEvent.change(screen.getByLabelText(/Player 2 Name/), { target: { value: 'Player2' } }) 
 
-    expect(setPlayer1NameMock).toHaveBeenCalledWith('Player1') 
-    expect(setPlayer2NameMock).toHaveBeenCalledWith('Player2') 
-  }) 
+    expect(setPlayer1NameMock).toHaveBeenCalledWith('Player1')
+    expect(setPlayer2NameMock).toHaveBeenCalledWith('Player2')
+  })
 
   test('calls navigate on form submission', () => {
     const setPlayer1NameMock = jest.fn() 
